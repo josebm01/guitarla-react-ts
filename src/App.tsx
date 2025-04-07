@@ -1,8 +1,8 @@
+
 import { Header } from "./components/Header";
 import { Guitar } from "./components/Guitar";
 import { Footer } from "./components/Footer";
 import { useCart } from "./hooks/useCart";
-
 
 function App() {
 
@@ -29,7 +29,7 @@ function App() {
               <Guitar 
                 key={ guitar.id } 
                 guitar={ guitar } 
-                addToCart={ addToCart}
+                addToCart={ addToCart }
               />
             ))
           }

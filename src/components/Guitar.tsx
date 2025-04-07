@@ -1,8 +1,13 @@
-import React from "react";
+import { AddToCartI, GuitarI } from "../types";
 
-export const Guitar = ({ guitar, addToCart }) => {
+type GuitarProps = {
+  guitar: GuitarI, 
+  addToCart: AddToCartI
+}
+
+export const Guitar = ({ guitar, addToCart }: GuitarProps ) => {
   
-  const { id, name, image, description, price  } = guitar
+  const { name, image, description, price  } = guitar
 
   return (
     <div className="col-md-6 col-lg-4 my-4 row align-items-center">
