@@ -1,9 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
 import { db } from "../data/db";
+import { CartItem, GuitarI, GuitarID } from "../types";
 
 export const useCart = () => {
     
-  const initialCart = () => {
+  const initialCart = (): CartItem[] => {
     const cart = localStorage.getItem("cart");
     return cart ? JSON.parse(cart) : [];
   };
@@ -21,7 +22,7 @@ export const useCart = () => {
   }, [cart]);
 
   // Agregando guitarras en el carrito
-  const addToCart = (item) => {
+  const addToCart = (item: GuitarI) => {
     const itemExists = cart.findIndex((guitar) => guitar.id === item.id);
 
     //? Actualizando cantidad o nueva guitarra
@@ -37,19 +38,19 @@ export const useCart = () => {
       setCart(updatedCart);
     } else {
       // no existe y se agrega la cantidad de 1
-      item.quantity = 1;
-      setCart([...cart, item]);
+      const newItem: CartItem = { ...item, quantity: 1 }
+      setCart([...cart, newItem]);
       // setCart((prevState) => [ ...prevState, item ])
     }
   };
 
   //? Quitar guitarra del carrito
-  const removeFromCart = (id) => {
+  const removeFromCart = (id: GuitarID) => {
     setCart((prevCart) => prevCart.filter((guitar) => guitar.id !== id));
   };
 
   //? Aumentar cantidad de guitarras
-  const increaseQuantity = (id) => {
+  const increaseQuantity = (id: GuitarID) => {
     const updatedCart = cart.map((guitar) => {
       // limitando la cantidad a agregar
       if (guitar.id === id && guitar.quantity < MAX_ITEMS) {
@@ -65,7 +66,7 @@ export const useCart = () => {
   };
 
   //? Disminuir cantidad de guitarras
-  const decreaseQuantity = (id) => {
+  const decreaseQuantity = (id: GuitarID) => {
     const updatedCart = cart.map((guitar) => {
       if (guitar.id === id && guitar.quantity > MIN_ITEMS) {
         return {
@@ -88,8 +89,8 @@ export const useCart = () => {
 
     //* state derivado - valor depende un state 
     //* useMemo - se usa para evitar que se ejecute una función cada vez que se renderiza, solo lo hará cuando cambie el state que tiene como dependencia
-    const isEmpty = useMemo( () => cart.length === 0, [cart] )
-    const cartTotal = useMemo( () => cart.reduce((total, item) => total + (item.quantity * item.price), 0), [cart] )
+    const isEmpty: boolean = useMemo( () => cart.length === 0, [cart] )
+    const cartTotal: number = useMemo( () => cart.reduce((total, item) => total + (item.quantity * item.price), 0), [cart] )
 
 
   return {

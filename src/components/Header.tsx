@@ -1,6 +1,16 @@
+import { CartItem, GuitarID } from "../types";
 
-export const Header = ({ cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal }) => {
+type HeaderProps = {
+    cart: CartItem[],
+    removeFromCart: ( id: GuitarID ) => void,
+    increaseQuantity: ( id: GuitarID ) => void,
+    decreaseQuantity: ( id: GuitarID ) => void,
+    clearCart: () => void,
+    isEmpty: boolean,
+    cartTotal: number
+}
 
+export const Header = ({ cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpty, cartTotal }: HeaderProps) => {
 
     //! NOTA: No se llama el hook useCart porque se duplicaría el state y no se recomienda
 
